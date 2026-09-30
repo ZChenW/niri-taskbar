@@ -61,25 +61,6 @@ practice will look something like this:
 }
 ```
 
-### Icon size
-
-By default, icons follow the height allocated to each taskbar button. To keep
-icons at a fixed size when the bar changes height, set `icon-size` in logical
-pixels (`icon_size` is also accepted):
-
-```jsonc
-{
-  "cffi/niri-taskbar": {
-    "module_path": "/your/path/to/libniri_taskbar.so",
-    "icon-size": 24,
-  },
-}
-```
-
-Values are clamped to 1–256 pixels; display scaling is applied automatically.
-Omitting this option retains automatic sizing. A fixed size prevents icons
-from retaining a temporarily enlarged bar height after another module shrinks.
-
 ### Application highlighting
 
 In addition to [notification support](#notifications), you can highlight
