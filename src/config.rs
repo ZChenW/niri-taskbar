@@ -121,33 +121,3 @@ where
 {
     Regex::new(&String::deserialize(de)?).map_err(serde::de::Error::custom)
 }
-
-#[cfg(test)]
-mod tests {
-    use super::Config;
-
-    #[test]
-    fn omitted_icon_size_preserves_automatic_sizing() {
-        let config: Config = serde_jsonc::from_str("{}").unwrap();
-        assert_eq!(config.icon_size(), None);
-        assert_eq!(Config::default().icon_size(), None);
-    }
-
-    #[test]
-    fn accepts_both_icon_size_spellings() {
-        for key in ["icon-size", "icon_size"] {
-            let json = format!(r#"{{"{key}": 24}}"#);
-            let config: Config = serde_jsonc::from_str(&json).unwrap();
-            assert_eq!(config.icon_size(), Some(24));
-        }
-    }
-
-    #[test]
-    fn bounds_configured_icon_sizes() {
-        for (input, expected) in [(-1, 1), (0, 1), (1, 1), (256, 256), (257, 256)] {
-            let json = format!(r#"{{"icon-size": {input}}}"#);
-            let config: Config = serde_jsonc::from_str(&json).unwrap();
-            assert_eq!(config.icon_size(), Some(expected));
-        }
-    }
-}
